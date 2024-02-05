@@ -68,19 +68,7 @@
 </html>
 <?php
 // Replace these with your database details
-$host = 'localhost';
-$db = 'phptest';
-$user = 'root';
-$pass = '';
-
-// Establish a connection to the database
-$mysqli = new mysqli($host, $user, $pass, $db);
-
-// Check the connection
-if ($mysqli->connect_error) {
-    die('Connection failed: ' . $mysqli->connect_error);
-}
-
+require_once "./dbh.inc.php";
 // Process the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];

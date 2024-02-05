@@ -1,7 +1,9 @@
 <?php
+
 session_start();
 error_reporting(E_ALL);
 
+require_once "./dbh.inc.php";
 // Check if the user is already logged in
 if (isset($_SESSION['user_id'])) {
     header("Location: profile.php");
@@ -14,19 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
 
  
-    // Ensure to connect to the database
-
-    $host = 'localhost';
-    $db = 'phptest';
-    $user = 'root';
-    $pass = '';
-
-    $mysqli = new mysqli($host, $user, $pass, $db);
-
-    if ($mysqli->connect_error) {
-        die('Connection failed: ' . $mysqli->connect_error);
-    }
-
+    
     $sql = "SELECT * FROM users WHERE user_name = '$username'";
     $result = $mysqli->query($sql);
    
@@ -37,8 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // exit;
         if (password_verify($password, $row['password'])) {
             // exit;
-            $_SESSION['user_id'] = $row['id'];
-            header("Location: profile.php");
+            $_SESSION['user_id'] = $row['user_id'];
+            // var_dump($_SESSION['user_id']);
+            // exit;
+            // header("location: ./profile.php");
+            header("Location: login.php");
+
             exit();
         } else {
             $error = "Invalid password";
